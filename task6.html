@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Form with Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .contact-form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .contact-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .contact-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .contact-form button {
+      width: 100%;
+      padding: 10px;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .contact-form button:hover {
+      background: #218838;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -8px;
+      margin-bottom: 10px;
+    }
+    .success {
+      color: green;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <form class="contact-form" id="contactForm">
+    <h2>Contact Us</h2>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" />
+    <div class="error" id="nameError"></div>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" />
+    <div class="error" id="emailError"></div>
+
+    <label for="message">Message:</label>
+    <textarea id="message" rows="4"></textarea>
+    <div class="error" id="messageError"></div>
+
+    <button type="submit">Submit</button>
+    <div class="success" id="successMessage"></div>
+  </form>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const messageError = document.getElementById("messageError");
+      const successMessage = document.getElementById("successMessage");
+
+      // Clear previous messages
+      nameError.textContent = "";
+      emailError.textContent = "";
+      messageError.textContent = "";
+      successMessage.textContent = "";
+
+      let valid = true;
+
+      // Name validation
+      if (name === "") {
+        nameError.textContent = "Name is required.";
+        valid = false;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email === "") {
+        emailError.textContent = "Email is required.";
+        valid = false;
+      } else if (!emailRegex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        valid = false;
+      }
+
+      // Message validation
+      if (message === "") {
+        messageError.textContent = "Message is required.";
+        valid = false;
+      }
+
+      // If valid
+      if (valid) {
+        successMessage.textContent = "Your message has been submitted successfully!";
+        document.getElementById("contactForm").reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
